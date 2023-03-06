@@ -21,7 +21,7 @@ def find_all_todos(root_dir):
     todos = []
     for root, dirs, files in os.walk(root_dir):
         for file in files:
-            if file.endsiwth(".py"):
+            if file.endswith(".py"):
                 file_path = os.path.join(root, file)
                 todos += find_todos(file_path)
     return todos
@@ -35,10 +35,12 @@ def generate_readme(todos, readme_path):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: python script.py <root_directory>")
+    if len(sys.argv) < 3:
+        print("Usage: python script.py <input_directory> <output_directory>")
         sys.exit(1)
 
     root_dir = sys.argv[1]
     todos = find_all_todos(root_dir)
-    generate_readme(todos, "README.md")
+    output_dir = sys.argv[2]
+    readme_path = os.path.join(output_dir, "README.md")
+    generate_readme(todos, readme_path)
